@@ -4,16 +4,18 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
+import java.lang.Character;
 
 public class RPNCal {
-    
+    //symbol contains the basic operators
     static ArrayList<String> symbol = new ArrayList(Arrays.asList(new String[]{"+","-","*","/","(",")"}));
 
-    public ArrayList<String> expressionSplit(String expression)
+    public ArrayList<String> expressionSplit(String expression) 
     {
         ArrayList<String> result = new ArrayList<String>();
 
         char[] singleCharacter = expression.toCharArray();
+
         String[] singleString = new String[singleCharacter.length];
         for(int i = 0; i < singleCharacter.length; ++i)
         {
@@ -60,53 +62,62 @@ public class RPNCal {
     		return false;
     	}
     }
-    public ArrayList<String> preToPos(ArrayList<String> pre)
+
+    public ArrayList<String> preToPos(ArrayList<String> pre) throws java.util.EmptyStackException
     {
         ArrayList<String> pos = new ArrayList(pre.size());
         Stack<String> stackForConvert = new Stack<String>();
-        for(String a : pre)
-        {
-        	if(!symbol.contains(a))
-        	{
-        		pos.add(a);
-        		continue;
-        	}
-        	if(a.equals("(") || stackForConvert.isEmpty())
-        	{
-        		stackForConvert.push(a);
-        		continue;
-        	}
-        	if(a.equals(")"))
-        	{
-        		while(!stackForConvert.peek().equals("("))
-        		{
-        			pos.add(stackForConvert.pop());
-        		}
-        		stackForConvert.pop();
-        		continue;
-        	}
+        //if any wrong format, throw exception
+        try{
         	
-        	while(lowerPriority(a,stackForConvert.peek()))
-        	{
-        		pos.add(stackForConvert.pop());
-        		if(stackForConvert.isEmpty())
-        			break;
-        	}
-        	stackForConvert.push(a);
-        }
-        while(!stackForConvert.isEmpty())
+            for(String a : pre)
+            {
+            	if(!symbol.contains(a))
+            	{
+            		pos.add(a);
+            		continue;
+            	}
+            	if(a.equals("(") || stackForConvert.isEmpty())
+            	{
+            		stackForConvert.push(a);
+            		continue;
+            	}
+            	if(a.equals(")"))
+            	{
+            		while(!stackForConvert.peek().equals("("))
+            		{
+            			pos.add(stackForConvert.pop());
+            		}
+            		stackForConvert.pop();
+            		continue;
+            	}
+            	
+            	while(lowerPriority(a,stackForConvert.peek()))
+            	{
+            		pos.add(stackForConvert.pop());
+            		if(stackForConvert.isEmpty())
+            			break;
+            	}
+            	stackForConvert.push(a);
+            }
+            while(!stackForConvert.isEmpty())
+            {
+            	pos.add(stackForConvert.pop());
+            }
+
+        }catch(java.util.EmptyStackException e)
         {
-        	pos.add(stackForConvert.pop());
+        	System.out.println("Wrong format!");
+            System.exit(1);
         }
-        
         return pos;
     }
 
-    public int Calculate(ArrayList<String> pos)
+    public int Calculate(ArrayList<String> pos) throws java.util.EmptyStackException,java.lang.ArithmeticException,java.lang.NumberFormatException
     {
     	Stack<String> stackForCal = new Stack<String>();
     	int result = 0;
-
+    	try{
     	for(String a : pos)
     	{
     		if(!symbol.contains(a))
@@ -128,24 +139,40 @@ public class RPNCal {
 
     	}
     	result = Integer.valueOf(stackForCal.pop());
+    	}catch(java.util.EmptyStackException e)
+    	{
+    		System.out.println("Wrong format!");
+    		System.exit(1);
+    	}catch(java.lang.NumberFormatException e)
+    	{
+    		System.out.println("Wrong character!");
+    		System.exit(1);
+    	}catch(java.lang.ArithmeticException e)
+    	{
+    		System.out.println("Wrong math!");
+    		System.exit(1);    		
+    	}
     	return result;
     }
 
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-         Scanner in = new Scanner(System.in);
-         String expression = in.nextLine();
-         RPNCal test = new RPNCal();
-         ArrayList<String> a = new ArrayList(test.expressionSplit(expression));
-         System.out.println(a);
-         a = test.preToPos(a);
-         System.out.println(a);
-         int result = test.Calculate(a);
-         System.out.println(result);
-//         boolean b = test.lowerPriority("+", "*");
-//         System.out.println(b);
-//         
+    public static void main(String[] args)
+    {
 
+        Scanner in = new Scanner(System.in);
+        String expression = in.nextLine();
+        RPNCal test = new RPNCal();
+
+        //print pre expression
+        ArrayList<String> a = new ArrayList(test.expressionSplit(expression));
+        System.out.println(a);
+
+        //print pos expression
+        a = test.preToPos(a);
+        System.out.println(a);
+        
+        //print result
+        int result = test.Calculate(a);
+        System.out.println(result);      
     }
 
 }
