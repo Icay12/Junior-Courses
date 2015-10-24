@@ -13,7 +13,7 @@ public class RPNCal {
     public ArrayList<String> expressionSplit(String expression) 
     {
         ArrayList<String> result = new ArrayList<String>();
-
+        expression = expression.replaceAll(" +","");
         char[] singleCharacter = expression.toCharArray();
 
         String[] singleString = new String[singleCharacter.length];
