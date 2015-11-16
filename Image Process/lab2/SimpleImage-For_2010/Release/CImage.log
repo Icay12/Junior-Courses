@@ -1,0 +1,33 @@
+﻿Build started 2012/5/6 20:58:30.
+     1>Project "G:\Digital Image Processing-2012\Reference code\SimpleImage-2010\CImage.vcxproj" on node 2 (rebuild target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\SimpleImage.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         F:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W4 /WX /O2 /Ob1 /Oy /D WIN32 /D _WINDOWS /D NDEBUG /D _MBCS /D _AFXDLL /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Release\SimpleImage.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         F:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W4 /WX /O2 /Ob1 /Oy /D WIN32 /D _WINDOWS /D NDEBUG /D _MBCS /D _AFXDLL /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ChildView.cpp CImage.cpp InfoDlg.cpp MainFrm.cpp
+         ChildView.cpp
+         CImage.cpp
+         InfoDlg.cpp
+         MainFrm.cpp
+         Generating Code...
+       ResourceCompile:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D NDEBUG /D _AFXDLL /l"0x0409" /IRelease\ /nologo /fo"Release\CImage.res" CImage.rc 
+       Link:
+         F:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"Release\SimpleImage.exe" /INCREMENTAL:NO /NOLOGO /MANIFEST /ManifestFile:"Release\SimpleImage.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"G:\Digital Image Processing-2012\Reference code\SimpleImage-2010\Release\SimpleImage.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"Release\SimpleImage.lib" /MACHINE:X86 Release\CImage.res
+         Release\ChildView.obj
+         Release\CImage.obj
+         Release\InfoDlg.obj
+         Release\MainFrm.obj
+         Release\stdafx.obj /SAFESEH 
+         CImage.vcxproj -> G:\Digital Image Processing-2012\Reference code\SimpleImage-2010\Release\SimpleImage.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"Release\SimpleImage.exe;#1" /manifest Release\SimpleImage.exe.intermediate.manifest "F:\Program Files\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
+       FinalizeBuildStatus:
+         Deleting file "Release\SimpleImage.unsuccessfulbuild".
+         Touching "Release\SimpleImage.lastbuildstate".
+     1>Done Building Project "G:\Digital Image Processing-2012\Reference code\SimpleImage-2010\CImage.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:09.58

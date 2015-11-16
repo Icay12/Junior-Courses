@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="SimpleImage">
+</Property><Property Name="Solution File" Value="G:\Digital Image Processing-2012\Reference code\SimpleImage-2010\SimpleImage.sln">
+</Property><Property Name="User Options File" Value="G:\Digital Image Processing-2012\Reference code\SimpleImage-2010\SimpleImage.suo">
+</Property><Property Name="Date" Value="2012年5月6日">
+</Property><Property Name="Time" Value="20:56">
+</Property><Property Name="Log Number" Value="2">
+</Property></Properties><Event ErrorLevel="2" Project="" Source="SimpleImage.sln" Description="Error creating backup file: G:\Digital Image Processing-2012\Reference code\SimpleImage-2010\SimpleImage.sln.old">
+</Event><Event ErrorLevel="2" Project="" Source="SimpleImage.suo" Description="Error creating backup file: G:\Digital Image Processing-2012\Reference code\SimpleImage-2010\SimpleImage.suo.old">
+</Event><Event ErrorLevel="0" Project="CImage" Source="CImage.vcproj" Description="Converting project file 'G:\Digital Image Processing-2012\Reference code\SimpleImage-2010\CImage.vcproj'.">
+</Event><Event ErrorLevel="1" Project="CImage" Source="CImage.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="CImage" Source="CImage.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="CImage" Source="CImage.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="CImage" Source="CImage.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="0" Project="CImage" Source="CImage.vcproj" Description="Web deployment to the local IIS server is no longer supported. The Web Deployment build tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="CImage" Source="CImage.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="CImage" Source="CImage.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="CImage" Source="CImage.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="0" Project="CImage" Source="CImage.vcproj" Description="Done converting to new project file 'G:\Digital Image Processing-2012\Reference code\SimpleImage-2010\CImage.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="CImage" Source="CImage.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="SimpleImage.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="SimpleImage.sln" Description="Converted">
+</Event></UpgradeLog>
