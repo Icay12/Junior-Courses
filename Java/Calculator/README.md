@@ -1,6 +1,6 @@
-Java Lab1: Calculator 
+#Java Lab1: Calculator 
 ---------------------------
-#requirement
+##requirement
 
 Write a program that reads an expression as input and print out the result. Only integers and operators below are allowed in the expression:
     
@@ -20,7 +20,7 @@ Sample Output
 
 11
 
-#notice
+##notice
 
 输入算术表达式（可包含空格）
 

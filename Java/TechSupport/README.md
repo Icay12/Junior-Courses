@@ -1,6 +1,6 @@
-Java Lab2: TechSupport
+#Java Lab2: TechSupport
 ---------------------------
-#requirement
+##requirement
 
 TechSupport is a program intended to provide technical support for customers of the fictitious 
 
@@ -11,7 +11,7 @@ known words we can generate a related response.  To make it more nature, one wor
 
 The user interface is quite straightforward: The user inputs a sentence and the program answers.  Your program should be able to split the user input into words and find "key words" inside them. Then for every key word, try to decide a "suitable" (random) answer and print it out.  For a sentence with more than one key word, you may have your own way to deal with it, like to print only one or all of them.
 
-#notice
+##notice
 
 程序中装载了几个简单的关键词 apple, lemon, grape, banana （词可相应增减）
 

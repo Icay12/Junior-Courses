@@ -1,6 +1,6 @@
-Java Lab3: miniCAD 
+#Java Lab3: miniCAD 
 ---------------------------
-#requirement
+##requirement
 
 编写一个简单的画图程序，能画以下四种图形：
 
