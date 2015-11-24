@@ -1,0 +1,233 @@
+package miniCAD;
+
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+
+import javax.swing.*;
+import javax.imageio.ImageIO;
+
+
+enum mode{
+	SELECT,
+	LINE,
+	CIRCLE,
+	RECTANGLE,
+	TEXT,
+}
+class shape{
+	int startX;
+	int startY;
+	int endX;
+	int endY;
+	mode type;
+}
+public class miniCAD extends JFrame implements MouseListener{
+	
+	//private JFrame m_frame;
+	
+	private JPanel m_panel;
+	private static int m_width = 800;
+	private static int m_height = 600;
+	private BufferedImage m_image;
+	private shape m_shape;
+	private mode m_mode;
+
+	private void makeMenu(){
+
+		//delare and create image icons
+		//		final ImageIcon openImageIcon 
+		//				= new ImageIcon("image/open.gif");
+		//		final ImageIcon saveImageIcon
+		//				= new ImageIcon("image/save.gif");
+		//		final ImageIcon lineImageIcon
+		//				= new ImageIcon("Images\\line.jpg");//("Images\\line.jpg");
+		//		final ImageIcon rectangleImageIcon
+		//				= new ImageIcon("image/rectangle.gif");	
+		//		final ImageIcon circleImageIcon
+		//				= new ImageIcon("image/circle.gif");		
+		//		final ImageIcon textImageIcon
+		//				= new ImageIcon("image/text.gif");		
+	
+	
+		//create menu items
+		final JMenuItem jmiOpen = new JMenuItem("Open");
+		final JMenuItem jmiSave = new JMenuItem("Save");		
+		final JMenuItem jmiExit = new JMenuItem("Exit");
+		final JMenuItem jmiLine = new JMenuItem("Line");
+		final JMenuItem jmiRectangle = new JMenuItem("Rectangle");
+		final JMenuItem jmiCircle = new JMenuItem("Circle");
+		final JMenuItem jmiText = new JMenuItem("Text");
+		final JMenuItem jmiSelect = new JMenuItem("Select");
+		//final JMenuItem jmiClear = new JMenuItem("Clear");
+		//create menu file
+		JMenuBar jmb = new JMenuBar();
+		JMenu fileMenu = new JMenu("File");
+		fileMenu.add(jmiOpen);
+		fileMenu.add(jmiSave);
+		//fileMenu.add(jmiClear);
+		fileMenu.addSeparator();
+		fileMenu.add(jmiExit);
+		jmiOpen.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				JFileChooser jfc = new JFileChooser(new File("."));	
+				int n = jfc.showOpenDialog(null);
+				if (n == JFileChooser.APPROVE_OPTION) {
+					BufferedImage tmpimage;
+					try {
+						tmpimage = ImageIO.read(new File(jfc.getSelectedFile().toString()));						
+						Graphics g = m_panel.getGraphics();										
+						g.drawImage(tmpimage, 0, 0, tmpimage.getWidth(m_panel),tmpimage.getHeight(m_panel), m_panel);
+						//JOptionPane.showMessageDialog(m_panel, "open succeed");
+						m_image=tmpimage;
+						//shapes.clear();					
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(m_panel, "open failed");
+					}
+				}
+			}
+		});
+		jmiSave.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				JFileChooser jfc =new JFileChooser(new File("."));	
+				int n = jfc.showSaveDialog(null);
+				if (n == JFileChooser.APPROVE_OPTION) {
+
+					//BufferedImage image =(BufferedImage)m_panel.createImage(m_panel.getWidth(), m_panel.getHeight()); 
+					//m_panel.paint(image.getGraphics());
+					//BufferedImage image = m_image;
+					try {
+						ImageIO.write(m_image, "jpg",  new java.io.File(jfc.getSelectedFile().toString()+".jpg"));
+						//JOptionPane.showMessageDialog(m_panel, "保存成功");
+						}catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(m_panel, "save failed");
+						}
+				}
+			}
+		});
+		/*jmiClear.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				BufferedImage tmpimage = null;				
+				Graphics g = m_panel.getGraphics();										
+				g.drawImage(tmpimage, 0, 0, tmpimage.getWidth(m_panel),tmpimage.getHeight(m_panel), m_panel);
+				//JOptionPane.showMessageDialog(m_panel, "open succeed");
+				m_image=tmpimage;
+				//shapes.clear();					
+			}
+		});	*/
+		jmiExit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});		
+		//create menu shape
+		JMenu shapeMenu = new JMenu("Shape");
+		shapeMenu.add(jmiLine);
+		shapeMenu.add(jmiRectangle);
+		shapeMenu.add(jmiCircle);
+		shapeMenu.add(jmiText);
+		jmiLine.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				m_mode = mode.LINE;
+			}			
+		});
+		jmiRectangle.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				m_mode = mode.RECTANGLE;
+			}			
+		});
+		jmiCircle.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				m_mode = mode.CIRCLE;
+			}			
+		});
+		jmiText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				m_mode = mode.TEXT;
+			}			
+		});
+
+		//create operation menu
+		JMenu operationMenu = new JMenu("Operation");
+		operationMenu.add(jmiSelect);
+		jmiSelect.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				m_mode = mode.SELECT;
+			}
+		});
+		//JMenu colorMenu = new JMenu("Color");
+		JMenu helpMenu = new JMenu("Help");
+		
+		jmb.add(fileMenu);
+		jmb.add(shapeMenu);
+		//jmb.add(helpMenu);
+		setJMenuBar(jmb);
+}
+
+	public void draw(Graphics g,shape s){
+
+		switch (s.type){
+			case LINE : g.drawLine(s.startX, s.startY, s.endX, s.endY); break;
+			case CIRCLE : g.drawOval(s.startX, s.startY, Math.abs(s.endX-s.startX), Math.abs(s.endY-s.startY)); break;
+			case RECTANGLE : g.drawRect(s.startX, s.startY, s.endX-s.startX, s.endY-s.startY); break;
+			case TEXT : g.setFont(new Font("Courier",Font.BOLD,30));
+						 g.drawString(s.text, s.startX, s.startY);
+						 break;
+		}
+	}
+
+	public miniCAD(){
+		//m_frame = new JFrame("miniCAD");
+		m_panel = new JPanel();
+		setSize(m_width, m_height);
+		setLayout(new BorderLayout());
+
+		m_panel.setBackground(Color.WHITE);
+		//m_panel.setForeground(Color.WHITE);
+		//m_panel.setBorder(BorderFactory.createLoweredBevelBorder());
+		//m_panel.addMouseListener(this);
+		//m_panel.addMouseMotionListener(this);
+		add(m_panel, BorderLayout.CENTER);
+		add(m_panel);
+		makeMenu();
+		setVisible(true);
+	
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		m_shape.startX = arg0.getX();
+		m_shape.startY = arg0.getY();
+		
+	}
+	public static void main(String[] args){
+		miniCAD MiniCAD = new miniCAD();
+	}	
+}

@@ -1,0 +1,29 @@
+package miniCAD;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class miniCAD extends JFrame{
+	
+	private JFrame m_frame;
+	private JPanel m_panel;
+	
+	private void createMenu(){
+		JMenuBar jmb = new JMenuBar();
+		JMenu fileMenu = new JMenu("File");
+		JMenu helpMenu = new JMenu("Help");
+	}
+
+	private void createToolBar(){
+		
+	}
+	
+	public miniCAD(){
+		m_frame = new JFrame();
+		m_panel = new JPanel();
+	}
+	public static void main(String[] args){
+		miniCAD MiniCAD = new miniCAD();
+	}
+}

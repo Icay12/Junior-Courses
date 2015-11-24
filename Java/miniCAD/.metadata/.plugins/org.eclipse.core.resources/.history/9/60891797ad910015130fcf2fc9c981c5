@@ -1,0 +1,294 @@
+package miniCAD;
+
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+
+import javax.swing.*;
+import javax.imageio.ImageIO;
+
+
+enum mode{
+	SELECT,
+	LINE,
+	CIRCLE,
+	RECTANGLE,
+	TEXT,
+}
+
+
+public class miniCAD extends JFrame implements MouseListener{
+	
+	//private JFrame m_frame;
+	
+	private JPanel m_panel;
+	private static int m_width = 800;
+	private static int m_height = 600;
+	private BufferedImage m_image = new BufferedImage(m_width, m_height, BufferedImage.TYPE_3BYTE_BGR);;
+	private shape m_shape = new shape();
+	private mode m_mode = mode.LINE;
+	private boolean countmouse = false;
+	class shape{
+		int startX;
+		int startY;
+		int endX;
+		int endY;
+		mode type;
+		String text;
+	}
+	// class iPanel extends JPanel{
+	// 	public iPanel(){}
+
+	// 	protected void paintComponent(Graphics g){
+	// 		super.paintComponent(g);
+	// 		if(m_image!=null){
+	//         	g.drawImage(m_image, 0,0,m_image.getWidth(this), m_image.getHeight(this), this);
+	//         }
+	// 			draw(g,m_shape);
+	// 	}
+	// }
+
+
+
+
+	private void makeMenu(){
+
+		//create menu items
+
+		final JMenuItem jmiOpen = new JMenuItem("Open");
+		final JMenuItem jmiSave = new JMenuItem("Save");		
+		final JMenuItem jmiExit = new JMenuItem("Exit");
+		final JRadioButtonMenuItem jmiLine = new JRadioButtonMenuItem("Line");
+		final JRadioButtonMenuItem jmiRectangle = new JRadioButtonMenuItem("Rectangle");
+		final JRadioButtonMenuItem jmiCircle = new JRadioButtonMenuItem("Circle");
+		final JRadioButtonMenuItem jmiText = new JRadioButtonMenuItem("Text");
+		final JRadioButtonMenuItem jmiSelect = new JRadioButtonMenuItem("Select");
+		//final JMenuItem jmiClear = new JMenuItem("Clear");
+		//create menu file
+		JMenuBar jmb = new JMenuBar();
+		JMenu fileMenu = new JMenu("File");
+		fileMenu.add(jmiOpen);
+		fileMenu.add(jmiSave);
+		//fileMenu.add(jmiClear);
+		fileMenu.addSeparator();
+		fileMenu.add(jmiExit);
+		jmiOpen.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				JFileChooser jfc = new JFileChooser(new File("."));	
+				int n = jfc.showOpenDialog(null);
+				if (n == JFileChooser.APPROVE_OPTION) {
+					BufferedImage tmpimage;
+					try {
+						tmpimage = ImageIO.read(new File(jfc.getSelectedFile().toString()));						
+						Graphics g = m_image.getGraphics();										
+						g.drawImage(tmpimage, 0, 0, tmpimage.getWidth(m_panel),tmpimage.getHeight(m_panel), m_panel);
+						//JOptionPane.showMessageDialog(m_panel, "open succeed");
+						m_image=tmpimage;
+						//shapes.clear();					
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(m_panel, "open failed");
+					}
+				}
+			}
+		});
+		jmiSave.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				// JFileChooser jfc =new JFileChooser(new File("."));	
+				// int n = jfc.showSaveDialog(null);
+				// if (n == JFileChooser.APPROVE_OPTION) {
+
+				// 	BufferedImage image =(BufferedImage)m_panel.createImage(m_panel.getWidth(), m_panel.getHeight()); 
+				// 	m_panel.paint(image.getGraphics());
+				// 	//BufferedImage image = m_image;
+				// 	try {
+				// 		ImageIO.write(image, "jpg",  new java.io.File(jfc.getSelectedFile().toString()+".jpg"));
+				// 		//JOptionPane.showMessageDialog(m_panel, "保存成功");
+				// 		}catch (IOException e1) {
+				// 			m_image = image;
+				// 		// TODO Auto-generated catch block
+				// 		e1.printStackTrace();
+				// 		JOptionPane.showMessageDialog(m_panel, "save failed");
+				// 		}
+
+				// }
+				File curimagefile;
+				JFileChooser jfc = new JFileChooser(new File("."));
+				int ret = jfc.showSaveDialog(jfc);
+				if (ret != JFileChooser.APPROVE_OPTION) return;
+				curimagefile = jfc.getSelectedFile();
+				
+				Graphics g = m_image.getGraphics();
+				//Iterator<shape> it = drawlist.iterator();
+				//while (it.hasNext()) draw(g,it.next());
+				
+				try{
+					ImageIO.write(m_image, "jpg", curimagefile);
+				} catch (IOException ex){
+					ex.printStackTrace();
+				}
+			}
+		});
+		/*jmiClear.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				BufferedImage tmpimage = null;				
+				Graphics g = m_panel.getGraphics();										
+				g.drawImage(tmpimage, 0, 0, tmpimage.getWidth(m_panel),tmpimage.getHeight(m_panel), m_panel);
+				//JOptionPane.showMessageDialog(m_panel, "open succeed");
+				m_image=tmpimage;
+				//shapes.clear();					
+			}
+		});	*/
+		jmiExit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});		
+		//create menu shape
+		ButtonGroup bgShape = new ButtonGroup();
+		JMenu shapeMenu = new JMenu("Shape");
+		shapeMenu.add(jmiLine); bgShape.add(jmiLine);
+		shapeMenu.add(jmiRectangle); bgShape.add(jmiRectangle);
+		shapeMenu.add(jmiCircle); bgShape.add(jmiCircle);
+		shapeMenu.add(jmiText); bgShape.add(jmiText);
+		jmiLine.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				m_mode = mode.LINE;
+			}			
+		});
+		jmiRectangle.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				m_mode = mode.RECTANGLE;
+			}			
+		});
+		jmiCircle.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				m_mode = mode.CIRCLE;
+			}			
+		});
+		jmiText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				m_mode = mode.TEXT;
+			}			
+		});
+
+		shapeMenu.addSeparator();
+		shapeMenu.add(jmiSelect); bgShape.add(jmiSelect);
+		jmiSelect.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				m_mode = mode.SELECT;
+			}
+		});
+		//JMenu colorMenu = new JMenu("Color");
+		//JMenu helpMenu = new JMenu("Help");
+		
+		jmb.add(fileMenu);
+		jmb.add(shapeMenu);
+
+		//jmb.add(helpMenu);
+		setJMenuBar(jmb);
+	}
+
+	public void draw(Graphics g,shape s){
+
+		switch (s.type){
+			case LINE : g.drawLine(s.startX, s.startY, s.endX, s.endY); break;
+			case CIRCLE : g.drawOval(s.startX, s.startY, Math.abs(s.endX-s.startX), Math.abs(s.endY-s.startY)); break;
+			case RECTANGLE : g.drawRect(s.startX, s.startY, s.endX-s.startX, s.endY-s.startY); break;
+			case TEXT : g.setFont(new Font("Courier",Font.BOLD,30));
+						 g.drawString(s.text, s.startX, s.startY);
+						 break;
+		}
+		g.setColor(Color.red);
+	}
+
+
+//	public void paint(Graphics g){
+//
+//		draw(g,m_shape);
+//		//this.setJMenuBar(jmb);
+//		//this.setSize(_width, _height);
+//		this.setLocationRelativeTo(null);
+//		this.setVisible(true);
+//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//	}
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		if(!countmouse){
+			m_shape.startX = arg0.getX();
+			m_shape.startY = arg0.getY();
+			//m_shape.type = m_mode;
+			countmouse = true;
+		}
+		else{
+			m_shape.endX = arg0.getX();
+			m_shape.endY = arg0.getY();
+			if(m_mode != mode.SELECT){
+				m_shape.type = m_mode;
+				Graphics g = getGraphics();	
+				draw(g, m_shape);
+			}
+			countmouse = false;
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+
+		
+	}
+	
+//	public void paint(Graphics g){
+//		draw(g, m_shape);
+////		this.setJMenuBar(jmenubar);
+////		this.setSize(_width, _height);
+////		this.setLocationRelativeTo(null);
+////		this.setVisible(true);
+////		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//	}	
+	public miniCAD(){
+		//m_frame = new JFrame("miniCAD");
+		//m_panel = new JPanel();
+		setSize(m_width, m_height);
+		setLayout(new BorderLayout());
+		setLocationRelativeTo(null);
+		//m_panel.setBackground(Color.WHITE);
+		//m_panel.setForeground(Color.WHITE);
+		//m_panel.setBorder(BorderFactory.createLoweredBevelBorder());
+		//m_panel.addMouseListener(this);
+		//m_panel.addMouseMotionListener(this);
+		addMouseListener(this);
+		//add(m_panel, BorderLayout.CENTER);
+		//add(m_panel);
+		makeMenu();
+		Graphics g = m_image.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, m_width, m_height);
+		
+		
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+	}
+	public static void main(String[] args){
+		miniCAD MiniCAD = new miniCAD();
+	}	
+}

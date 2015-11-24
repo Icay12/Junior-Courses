@@ -1,0 +1,34 @@
+package miniCAD;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class miniCAD extends JFrame{
+	
+	private JFrame m_frame;
+	private JPanel m_panel;
+	private static int m_width = 800;
+	private static int m_height = 600;
+	private void createMenu(){
+		JMenuBar jmb = new JMenuBar();
+		JMenu fileMenu = new JMenu("File");
+		JMenu helpMenu = new JMenu("Help");
+	}
+
+	private void createToolBar(){
+		
+	}
+	
+	public miniCAD(){
+		m_frame = new JFrame("miniCAD");
+		m_panel = new JPanel();
+		m_frame.setVisible(true);
+		
+		m_frame.setSize(m_width, m_height);
+		createMenu();
+	}
+	public static void main(String[] args){
+		miniCAD MiniCAD = new miniCAD();
+	}
+}

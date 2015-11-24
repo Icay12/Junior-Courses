@@ -1,0 +1,89 @@
+package miniCAD;
+
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class miniCAD extends JFrame{
+	
+	//private JFrame m_frame;
+	
+	private JPanel m_panel;
+	private static int m_width = 800;
+	private static int m_height = 600;
+
+	private static makeMenu(){
+
+		//delare and create image icons
+		private ImageIcon openImageIcon 
+				= new ImageIcon(getClass().getResource("image/open.gif"));
+		private ImageIcon saveImageIcon
+				= new ImageIcon(getClass().getResource("image/save.gif"));
+		private ImageIcon lineImageIcon
+				= new ImageIcon(getClass().getResource("image/line.gif"));//("Images\\line.png");("Images\\line.jpg");
+		private ImageIcon rectangleImageIcon
+				= new ImageIcon(getClass().getResource("image/rectangle.gif"));	
+		private ImageIcon circleImageIcon
+				= new ImageIcon(getClass().getResource("image/circle.gif"));		
+		private ImageIcon textImageIcon
+				= new ImageIcon(getClass().getResource("image/text.gif"));		
+	
+	
+		//create menu items
+		private JMenuItem jmiOpen = new JMenuItem("Open",openImageIcon);
+		private JMenuItem jmiSave = new JMenuItem("Save",saveImageIcon);
+		private JMenuItem jmiClear = new JMenuItem("Clear");
+		private JMenuItem jmiExit = new JMenuItem("Exit");
+		private JMenuItem jmiLine = new JMenuItem("Line",lineImageIcon);
+		private JMenuItem jmiRectangle = new JMenuItem("Rectangle",rectangleImageIcon);
+		private JMenuItem jmiCircle = new JMenuItem("Circle",circleImageIcon);
+		private JMenuItem jmiText = new JMenuItem("Text",textImageIcon);
+
+		//create menus
+		JMenuBar jmb = new JMenuBar();
+		JMenu fileMenu = new JMenu("File");
+		fileMenu.add(jmiOpen);
+		fileMenu.add(jmiSave);
+		fileMenu.add(jmiClear);
+		fileMenu.addSeparator();
+		fileMenu.add(jmiExit);
+		JMenu shapeMenu = new JMenu("Shape");
+		shapeMenu.add(jmiLine);
+		shapeMenu.add(jmiRectangle);
+		shapeMenu.add(jmiCircle);
+		shapeMenu.add(jmiText);
+		//JMenu colorMenu = new JMenu("Color");
+		JMenu helpMenu = new JMenu("Help");
+		jmb.add(fileMenu);
+		jmb.add(helpMenu);
+		jmb.add(shapeMenu);
+		//jmb.add(helpMenu);
+		setJMenuBar(jmb);
+}
+	//create a JFileChooser with the current directory
+	private JFileChooser JFileChooser
+			= new JFileChooser(new File("."));
+
+	
+	public miniCAD(){
+		//m_frame = new JFrame("miniCAD");
+		m_panel = new JPanel();
+		setSize(m_width, m_height);
+		setLayout(new BorderLayout());
+
+		m_panel.setBackground(Color.WHITE);
+		//m_panel.setForeground(Color.WHITE);
+		//m_panel.setBorder(BorderFactory.createLoweredBevelBorder());
+		m_panel.addMouseListener(this);
+		m_panel.addMouseMotionListener(this);
+		add(m_panel, BorderLayout.CENTER);
+		add(m_panel);
+		makeMenu();
+		setVisible(true);
+	
+	}
+	public static void main(String[] args){
+		miniCAD MiniCAD = new miniCAD();
+	}
+}
